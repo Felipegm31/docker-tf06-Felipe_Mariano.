@@ -1,0 +1,23 @@
+services:
+# Serviço 01 - 'web'
+  web:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: lab_compose_tf06
+    ports:
+      - "8000:80"
+    environment:
+      - DB_HOST=db_cache
+    depends_on:
+      - db_cache
+# Serviço 02 - 'db_cache'
+  db_cache:
+    image: redis:alpine
+    container_name: redis_data
+    volumes:
+      - redis_data:/data
+# Volume persistente com nome 'redis_data'
+volumes:
+   redis_data:
+    driver: local
